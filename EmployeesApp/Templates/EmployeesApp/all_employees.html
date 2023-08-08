@@ -1,0 +1,15 @@
+{% extends 'EmployeesApp/base.html' %}
+
+
+{% block title %}Employees {% endblock %}
+
+{% block content %}
+<ul>
+{% for employee in employees %}
+
+    <li>{{employee}}</li>
+
+{% endfor %}
+</ul>
+
+{% endblock %}
