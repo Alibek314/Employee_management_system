@@ -26,7 +26,7 @@
 # def seeder(value):
 #     for i in range(value):
 #         name = faker.name()
-#         position = random.choices(pos)
+#         position = random.choices(pos)[0]
 #         hire_date = faker.date_this_decade()
 #         salary = random.randint(500, 3000)
 #         obj = Employees.objects.get_or_create(name=name, position=position, hire_date=hire_date, salary=salary)
