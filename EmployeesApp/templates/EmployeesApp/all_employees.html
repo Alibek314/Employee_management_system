@@ -1,15 +1,30 @@
 {% extends 'EmployeesApp/base.html' %}
-
-
+{% load static %}
+{% load mptt_tags %}
 {% block title %}Employees {% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'EmployeesApp/bootstrap/css/bootstrap.min.css' %}">
+
+{% endblock %}
+
 
 {% block content %}
-<ul>
-{% for employee in employees %}
 
-    <li>{{employee}}</li>
+        <ul class="root">
+            {% recursetree employees %}
+            <li>
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ node.name }}, {{ node.position }}
+                </button>
+                {% if not node.is_leaf_node %}
+                <ul class="children">
+                    {{ children }} {{ children.position }}
+                </ul>
+                {% endif %}
+            </li>
+            {% endrecursetree %}
+        </ul>
 
-{% endfor %}
-</ul>
+
 
 {% endblock %}
