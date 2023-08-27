@@ -1,0 +1,23 @@
+{% extends 'EmployeesApp/base.html' %}
+{% block title %}{{ employee.name }}{% endblock %}
+{% load static %}
+{% block head %}
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="{% static 'EmployeesApp/bootstrap/css/bootstrap-responsive.min.css' %}">
+<link rel="stylesheet" href="{% static 'EmployeesApp/bootstrap/js/bootstrap.min.js' %}">
+<style>
+.container{
+  justify-content: center;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+      <h5 class="card-title">{{employee.name}}</h5>
+      <h6 class="card-subtitle mb-2 text-body-secondary">{{employee.position}}</h6>
+      <p class="card-text">Salary - {{employee.salary}}$</p>
+      <a href="http://127.0.0.1:8000/team" class="card-link">Back to team</a>
+</div>
+{% endblock %}
