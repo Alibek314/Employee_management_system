@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'EmployeesApp',
     'mptt',
     'django_extensions',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [

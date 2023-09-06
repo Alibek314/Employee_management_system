@@ -13,21 +13,26 @@
 
 {% block content %}
 
-        <ol class="root">
-            {% recursetree employees %}
-            <li>
-                <button type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ node.name }}, {{ node.position }}
-                </button>
-                {% if not node.is_leaf_node %}
-                <ul class="children">
-                    {{ children }} {{ children.position }}
-                </ul>
-                {% endif %}
-            </li>
-            {% endrecursetree %}
-        </ol>
+<div class='float-right' style="margin-right: 50px">
+  <button class="btn btn-outline-dark"><a href="team">Team</a></button>
+</div>
 
+<div style="margin-left: 50px; margin-top: 10px">
+    <ol class="root">
+        {% recursetree employees %}
+        <li>
+            <button type="button" class="btn btn-secondary btn-sm" style="margin-bottom: 1px">
+                {{ node.name }}, {{ node.position }}
+            </button>
+            {% if not node.is_leaf_node %}
+            <ul class="children">
+                {{ children }} {{ children.position }}
+            </ul>
+            {% endif %}
+        </li>
+        {% endrecursetree %}
+    </ol>
+</div>
 
 
 {% endblock %}
