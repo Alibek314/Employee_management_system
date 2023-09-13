@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <script src='https://code.jquery.com/jquery-3.7.0.js'></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <style type="text/css">
 .container {
     width: 70%;
@@ -23,15 +24,15 @@
 </div>
 
 <div class="container">
-    <input class="form-control" type="text" placeholder="Введите текст для поиска" id="search-text" onkeyup="tableSearch()">
+    <input id="search-text" class="form-control" type="text" placeholder="Введите текст для поиска" >
     <table id="myTable" class="table table-bordered table-hover table-sm">
       <thead class="thead-dark">
         <tr>
-          <th>id</th>
-          <th>Name</th>
-          <th>Position</th>
-          <th>Hire date</th>
-          <th>Salary</th>
+          <th onclick="order_table('id')">id</th>
+          <th onclick="order_table('name')">Name</th>
+          <th onclick="order_table('position')">Position</th>
+          <th onclick="order_table('hire_date')">Hire date</th>
+          <th onclick="order_table('salary')">Salary</th>
         </tr>
       </thead>
       <tbody>
@@ -74,96 +75,43 @@
   </ul>
 </nav>
 
-<script>
-function sortTable(table, col, reverse) {
-    // изменяем tHead
-    let th = table.tHead;
-    [...th.rows].forEach(row => {
-      [...row.cells].forEach((cell, index) => {
-          cell.classList.remove("asc");
-          cell.classList.remove("desc");
-          if (index === col){
-             if(reverse) {
-                cell.classList.add("desc");
-             } else {
-                cell.classList.add("asc");
-             }
-          }
-
-       // временное решение удалите на своём примере
-       cell.innerText = cell.innerText.replaceAll(" asc",  "");
-       cell.innerText = cell.innerText.replaceAll(" desc", "");
-
-       if (index === col){
-        if(reverse) {
-            cell.innerText += "";
-        } else {
-            cell.innerText += "";
-        }
-       } // конец временного решения
-
-      });
-    });
-
-    // ваш основной код без изменения
-
-    var tb = table.tBodies[0], // use `<tbody>` to ignore `<thead>` and `<tfoot>` rows
-        tr = Array.prototype.slice.call(tb.rows, 0), // put rows into array
-        i;
-    reverse = -((+reverse) || -1);
-    tr = tr.sort(function (a, b) { // sort rows
-        return reverse // `-1 *` if want opposite order
-            * (a.cells[col].textContent.trim() // using `.textContent.trim()` for test
-                .localeCompare(b.cells[col].textContent.trim())
-               );
-    });
-    for(i = 0; i < tr.length; ++i) tb.appendChild(tr[i]); // append each row in order
-}
-
-function makeSortable(table) {
-    var th = table.tHead, i;
-    th && (th = th.rows[0]) && (th = th.cells);
-    if (th) i = th.length;
-    else return; // if no `<thead>` then do nothing
-    while (--i >= 0) (function (i) {
-        var dir = 1;
-        th[i].addEventListener('click', function () {sortTable(table, i, (dir = 1 - dir))});
-    }(i));
-}
-
-function makeAllSortable(parent) {
-    parent = parent || document.body;
-    var t = parent.getElementsByTagName('table'), i = t.length;
-    while (--i >= 0) makeSortable(t[i]);
-}
-
-window.onload = function () {makeAllSortable();};
-</script>
-
-<script>
-function tableSearch() {
-    var phrase = document.getElementById('search-text');
-    var table = document.getElementById('myTable');
-    var regPhrase = new RegExp(phrase.value, 'i');
-    var flag = false;
-    for (var i = 1; i < table.rows.length; i++) {
-        flag = false;
-        for (var j = table.rows[i].cells.length - 1; j >= 0; j--) {
-            flag = regPhrase.test(table.rows[i].cells[j].innerHTML);
-            if (flag) break;
-        }
-        if (flag) {
-            table.rows[i].style.display = "";
-        } else {
-            table.rows[i].style.display = "none";
-        }
-
-    }
-}
-</script>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<script>window.jQuery || document.write('<script src="path/to/your/jquery"><\/script>')</script>
+<script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
+
+<script>
+var page_number = {{ page_obj.number }}
+
+
+function order_table(n) {
+sort_table(n);
+};
+
+function sort_table(n) {
+    $.ajax(
+    {
+        type:"GET",
+        url:"team",
+        data: {
+        order_by:n,
+        page_number:page_number,
+        },
+
+        success:function(data){
+            $("#div_sort").replaceWith(data);
+        }
+
+        })
+
+}
+
+
+</script>
+
+
 
 {% endblock %}

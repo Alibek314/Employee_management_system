@@ -5,11 +5,20 @@ from django.urls import reverse
 
 
 class Employees(MPTTModel):
+    """
+    Base model for all Employees
+    """
     name = models.CharField(max_length=50)
     position = models.TextField()
     hire_date = models.DateField()
     salary = models.PositiveIntegerField()
-    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
+    parent = TreeForeignKey(
+        'self',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='children',
+    )
 
     def get_url(self):
         return reverse('employee_detail', args=[self.pk])
