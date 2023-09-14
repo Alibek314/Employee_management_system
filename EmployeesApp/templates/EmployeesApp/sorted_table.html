@@ -1,0 +1,26 @@
+<div class="container" id="containerID">
+    <input id="search-text" class="form-control" type="text" placeholder="Введите текст для поиска" onkeyup="tableSearch()">
+    <table id="myTable" class="table table-bordered table-hover table-sm">
+      <thead class="thead-dark">
+        <tr>
+          <th onclick="order_table('id')">id</th>
+          <th onclick="order_table('name')">Name</th>
+          <th onclick="order_table('position')">Position</th>
+          <th onclick="order_table('hire_date')">Hire date</th>
+          <th onclick="order_table('salary')">Salary</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for employee in sorted_employees %}
+            <tr id="fields">
+              <td>{{employee.pk}}</td>
+              <td><a href={{employee.get_url}}>{{employee.name}}</a></td>
+              <td>{{employee.position}}</td>
+              <td>{{employee.hire_date}}</td>
+              <td>{{employee.salary}} $</td>
+            </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+</div>
+
