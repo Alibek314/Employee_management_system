@@ -1,5 +1,5 @@
 # Тестовое задание на Python Junior позицию
-Задание получено из [репозитория Hexlet](https://github.com/Hexlet/ru-test-assignments)
+Задание взято из [репозитория Hexlet](https://github.com/Hexlet/ru-test-assignments)
 
 ## Задание
 * [abz.agency](https://abz.agency/)
