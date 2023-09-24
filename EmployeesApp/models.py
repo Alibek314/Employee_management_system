@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from mptt.models import MPTTModel, TreeForeignKey
 from django.urls import reverse

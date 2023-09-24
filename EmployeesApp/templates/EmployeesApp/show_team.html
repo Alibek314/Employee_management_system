@@ -13,22 +13,47 @@
 
 {% block content %}
 
-<div class='float-right' style="margin-right: 50px; margin-top: 10px">
-  <button class="btn btn-outline-dark"><a href="http://127.0.0.1:8000">Hierarchy</a></button>
-</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="{% url 'hierarchy_route' %}">Hierarchy</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'team_route' %}">Team<span class="sr-only">(current)</span></a>
+      </li>
+
+        {% if username != '' %}
+            <li class="nav-item">
+                <a href="#" class="nav-link">Welcome, {{ username.title }}</a>
+            </li>
+            <li class="nav-item">
+                <a href="http://127.0.0.1:8000/auth/logout/" class="nav-link">Logout</a>
+            </li>
+        {% else %}
+            <li class="nav-item">
+                <a href="http://127.0.0.1:8000/auth/login" class="nav-link">Login</a>
+            </li>
+        {% endif %}
+
+    </ul>
+  </div>
+</nav>
+
 
 <div class="container" id="containerID" style="width: 70%">
     <input id="search-text" class="form-control" type="text" placeholder="Введите текст для поиска" onkeyup="tableSearch()" >
 
     <table id="myTable" class="table table-bordered table-hover table-sm">
       <thead class="thead-dark">
-        <tr>
+      <tr>
           <th onclick="order_table('id')">id</th>
           <th onclick="order_table('name')">Name</th>
           <th onclick="order_table('position')">Position</th>
           <th onclick="order_table('hire_date')">Hire date</th>
           <th onclick="order_table('salary')">Salary</th>
-        </tr>
+      </tr>
       </thead>
       <tbody>
         {% for employee in page_obj %}
@@ -71,6 +96,8 @@
 </nav>
 
 
+
+
 <script>
 
 var page_number = {{ page_obj.number }};
@@ -81,7 +108,7 @@ function order_table(n) {
 }
 
 async function sort_table(n) {
-	let response = await fetch('/team', {
+	let response = await fetch('team', {
 			method: "GET",
 			headers: {
 				"Table-Order": n,
@@ -111,7 +138,6 @@ function tableSearch() {
     }
 }
 </script>
-
 
 
 {% endblock %}
