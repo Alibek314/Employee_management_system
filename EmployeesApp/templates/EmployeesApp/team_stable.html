@@ -1,6 +1,4 @@
 {% extends 'EmployeesApp/base.html' %}
-{% load static %}
-{% load mptt_tags %}
 {% block title %}Team {% endblock %}
 {% block head %}
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -26,7 +24,7 @@
 
         {% if username != '' %}
             <li class="nav-item">
-                <a href="#" class="nav-link">Welcome, {{ username.title }}</a>
+                <a href="" class="nav-link">Welcome, {{ username.title }}</a>
             </li>
             <li class="nav-item">
                 <a href="http://127.0.0.1:8000/auth/logout/" class="nav-link">Logout</a>
@@ -41,18 +39,17 @@
   </div>
 </nav>
 
-
 <div class="container" id="containerID" style="width: 70%">
-    <input id="search-text" class="form-control" type="text" placeholder="Введите текст для поиска" onkeyup="tableSearch()" >
+    <input id="search-text" class="form-control" type="text" placeholder="Введите текст для поиска">
 
     <table id="myTable" class="table table-bordered table-hover table-sm">
       <thead class="thead-dark">
       <tr>
-          <th onclick="order_table('id')">id</th>
-          <th onclick="order_table('name')">Name</th>
-          <th onclick="order_table('position')">Position</th>
-          <th onclick="order_table('hire_date')">Hire date</th>
-          <th onclick="order_table('salary')">Salary</th>
+          <th>id</th>
+          <th>Name</th>
+          <th>Position</th>
+          <th>Hire date</th>
+          <th>Salary</th>
       </tr>
       </thead>
       <tbody>
@@ -94,50 +91,5 @@
       </li>
   </ul>
 </nav>
-
-
-
-
-<script>
-
-var page_number = {{ page_obj.number }};
-
-function order_table(n) {
-    var order_list = [page_number, n]
-    sort_table(order_list);
-}
-
-async function sort_table(n) {
-	let response = await fetch('team', {
-			method: "GET",
-			headers: {
-				"Table-Order": n,
-			},
-		})
-    let result = await response.text()
-    document.getElementById('containerID').innerHTML = result;
-}
-
-function tableSearch() {
-    var phrase = document.getElementById('search-text');
-    var table = document.getElementById('myTable');
-    var regPhrase = new RegExp(phrase.value, 'i');
-    var flag = false;
-    for (var i = 1; i < table.rows.length; i++) {
-        flag = false;
-        for (var j = table.rows[i].cells.length - 1; j >= 0; j--) {
-            flag = regPhrase.test(table.rows[i].cells[j].innerHTML);
-            if (flag) break;
-        }
-        if (flag) {
-            table.rows[i].style.display = "";
-        } else {
-            table.rows[i].style.display = "none";
-        }
-
-    }
-}
-</script>
-
 
 {% endblock %}
