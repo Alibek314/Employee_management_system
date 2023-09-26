@@ -16,10 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from EmployeesApp.views import redirect_company
+from EmployeesApp.views import redirect_company, registration
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('auth/registration', registration),
     path('auth/', include('rest_framework.urls')),
     path('accounts/profile/', redirect_company),
     path('company/', include('EmployeesApp.urls')),

@@ -11,7 +11,7 @@ class Employees(MPTTModel):
     """
     name = models.CharField(max_length=50)
     position = models.TextField()
-    hire_date = models.DateField()
+    hire_date = models.DateField(auto_now_add=True)
     salary = models.PositiveIntegerField()
     parent = TreeForeignKey(
         'self',

@@ -1,6 +1,9 @@
+from django.contrib import messages
+from django.contrib.auth import login
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
 
+from .forms import NewUserForm
 from .models import Employees
 
 # Create your views here.
@@ -25,7 +28,8 @@ def get_employee(request, emp_id):
     employee = get_object_or_404(Employees, id=emp_id)
     username = request.user.username
     return render(request, "EmployeesApp/one_employee.html", {
-        "employee": employee
+        "employee": employee,
+        "username": username,
     })
 
 
@@ -69,8 +73,26 @@ def show_team(request):
             })
 
 
+def registration(request):
+    """
+    Default registration page(with custom register form).
+    """
+    if request.method == "POST":
+        form = NewUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Registration complete")
+            return redirect('hierarchy_route')
+
+        messages.error(request, "Invalid data")
+    form = NewUserForm()
+    return render(request, "EmployeesApp/registration.html",{
+        "register_form": form
+    })
+
+
 def redirect_company(request):
     """
-    This view redirects client from rest_framework's default login page to "http://127.0.0.1:8000/company/"
+    This view simply redirects client from rest_framework's default login page to 'hierarchy_route' url
     """
     return redirect('hierarchy_route')
