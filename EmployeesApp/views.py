@@ -3,7 +3,7 @@ from django.contrib.auth import login
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
 
-from .forms import NewUserForm
+from .forms import NewUserForm, NewDescendantForm
 from .models import Employees
 
 # Create your views here.
@@ -75,7 +75,7 @@ def show_team(request):
 
 def registration(request):
     """
-    Default registration page(with custom register form).
+    Default registration page(with custom user register form).
     """
     if request.method == "POST":
         form = NewUserForm(request.POST)
@@ -86,7 +86,7 @@ def registration(request):
 
         messages.error(request, "Invalid data")
     form = NewUserForm()
-    return render(request, "EmployeesApp/registration.html",{
+    return render(request, "EmployeesApp/registration.html", {
         "register_form": form
     })
 
@@ -96,3 +96,45 @@ def redirect_company(request):
     This view simply redirects client from rest_framework's default login page to 'hierarchy_route' url
     """
     return redirect('hierarchy_route')
+
+
+def create_descendant(request, anc_id=None):
+    """
+    Adding new descendant employee to database
+    """
+    if request.method == "POST":
+        if anc_id is not None:
+            ancestor = Employees.objects.get(id=anc_id)
+            form = NewDescendantForm(request.POST)
+            form.save(ancestor=ancestor)
+        else:
+            form = NewDescendantForm(request.POST)
+        if form.is_valid():
+            form.save()
+
+        return redirect('team_route')
+    else:
+        form = NewDescendantForm()
+        return render(request, "EmployeesApp/new_descendant.html", {
+            "form": form,
+        })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
