@@ -28,6 +28,7 @@ class Employees(MPTTModel):
     position = models.CharField(max_length=2, choices=POSITION_CHOICES, default=TRAINEE)
     hire_date = models.DateField(auto_now_add=True)
     salary = models.PositiveIntegerField()
+    photo = models.ImageField(upload_to="photo/%Y/%m/%d", blank=True, verbose_name='')
     parent = TreeForeignKey(
         'self',
         on_delete=models.CASCADE,
@@ -41,6 +42,9 @@ class Employees(MPTTModel):
 
     def create_descendant(self):
         return reverse('new_descendant', args=[self.pk])
+
+    def delete_employee(self):
+        return reverse('delete_employee', args=[self.pk])
 
     class MPTTMeta:
         order_insertion_by = ['name']

@@ -21,13 +21,21 @@ class NewUserForm(UserCreationForm):
         return user
 
 
-class NewDescendantForm(forms.ModelForm):
+class EmployeeForm(forms.ModelForm):
+    parent_ID = forms.IntegerField(required=False)
+
     class Meta:
         model = Employees
-        fields = ["name", "position", "salary"]
+        fields = ["name", "position", "salary", "photo"]
+
+
+class DescendantForm(forms.ModelForm):
+    class Meta:
+        model = Employees
+        fields = ["name", "position", "salary", "photo"]
 
     def save(self, commit=True, ancestor=None):
-        employee = super(NewDescendantForm, self).save(commit=False)
+        employee = super(DescendantForm, self).save(commit=False)
         if ancestor is not None:
             employee.parent = ancestor
         if commit:
