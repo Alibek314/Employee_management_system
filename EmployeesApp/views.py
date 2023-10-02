@@ -48,7 +48,7 @@ def get_employee(request, emp_id):
 
 def show_team(request):
     """
-    Shows list of all employees. (access to CRUD operations here also)
+    Shows list of all employees. (sorted also)
     """
     team = Employees.objects.all()
     paginator = Paginator(team, 100)

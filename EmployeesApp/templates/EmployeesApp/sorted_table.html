@@ -21,7 +21,12 @@
               <td>{{employee.position}}</td>
               <td>{{employee.hire_date}}</td>
               <td>{{employee.salary}} $</td>
-              <td>{{employee.photo}}</td>
+              <td>
+                  {% if employee.photo.url is not None %}
+                  <img src="{{ employee.photo.url }}" alt="employee" style="max-height:50px">
+                  {% else %}
+                  No Avatar
+                  {% endif %}
               <td>
                   <a href={{employee.create_descendant}}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16" >

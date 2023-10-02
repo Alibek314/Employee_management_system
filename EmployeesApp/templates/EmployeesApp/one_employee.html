@@ -38,10 +38,26 @@
 </nav>
 
 <div class="card" style="width: 20rem; margin-left: 200px; margin-top: 50px">
-    <form method="POST">
+        {% if form.is_multipart %}
+            <form enctype="multipart/form-data" method="post">
+        {% else %}
+            <form method="post">
+        {% endif %}
 		{% csrf_token %}
 		{{ employee_form|crispy }}
 		<button class="btn btn-primary" type="submit">Change employee details</button>
-	</form>
+
 </div>
+
+<div class="card" style="width: 20rem; margin-left: 200px; margin-top: 50px">
+      <div class="card-body">
+            <h5 class="card-title">{{employee.name}}</h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary">Level - {{employee.position}}</h6>
+            <p class="card-text">Salary - {{employee.salary}}$</p>
+            <img src="" alt="">
+            <a href="http://127.0.0.1:8000/team" class="card-link">Back to team</a>
+      </div>
+</div>
+
+
 {% endblock %}

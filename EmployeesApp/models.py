@@ -28,7 +28,7 @@ class Employees(MPTTModel):
     position = models.CharField(max_length=2, choices=POSITION_CHOICES, default=TRAINEE)
     hire_date = models.DateField(auto_now_add=True)
     salary = models.PositiveIntegerField()
-    photo = models.ImageField(upload_to="photo/%Y/%m/%d", blank=True, verbose_name='')
+    photo = models.ImageField(upload_to="photo/", blank=True, default='default_employee.jpg')
     parent = TreeForeignKey(
         'self',
         on_delete=models.CASCADE,
