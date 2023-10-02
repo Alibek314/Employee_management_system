@@ -33,6 +33,9 @@
             <li class="nav-item">
                 <a href="http://127.0.0.1:8000/auth/login" class="nav-link">Login</a>
             </li>
+            <li class="nav-item">
+                <a href="http://127.0.0.1:8000/auth/registration" class="nav-link">Registration</a>
+            </li>
         {% endif %}
 
     </ul>
@@ -50,6 +53,7 @@
           <th>Position</th>
           <th>Hire date</th>
           <th>Salary</th>
+          <th>Photo</th>
       </tr>
       </thead>
       <tbody>
@@ -60,6 +64,12 @@
               <td>{{employee.position}}</td>
               <td>{{employee.hire_date}}</td>
               <td>{{employee.salary}} $</td>
+              <td>
+                  {% if employee.photo.url is not None %}
+                  <img src="{{ employee.photo.url }}" alt="employee" style="max-height:50px">
+                  {% else %}
+                  No Avatar
+                  {% endif %}
             </tr>
         {% endfor %}
       </tbody>

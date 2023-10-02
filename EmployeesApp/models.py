@@ -9,10 +9,26 @@ class Employees(MPTTModel):
     """
     Base model for all Employees
     """
+
+    TRAINEE = "TR"
+    JUNIOR = "JR"
+    MIDDLE = "MD"
+    SENIOR = "SR"
+    LEAD = "LD"
+
+    POSITION_CHOICES = [
+        (TRAINEE, "Trainee"),
+        (JUNIOR, "Junior"),
+        (MIDDLE, "Middle"),
+        (SENIOR, "Senior"),
+        (LEAD, "Lead"),
+    ]
+
     name = models.CharField(max_length=50)
-    position = models.TextField()
-    hire_date = models.DateField()
+    position = models.CharField(max_length=2, choices=POSITION_CHOICES, default=TRAINEE)
+    hire_date = models.DateField(auto_now_add=True)
     salary = models.PositiveIntegerField()
+    photo = models.ImageField(upload_to="photo/", blank=True, default='default_employee.jpg')
     parent = TreeForeignKey(
         'self',
         on_delete=models.CASCADE,
@@ -23,6 +39,12 @@ class Employees(MPTTModel):
 
     def get_url(self):
         return reverse('employee_detail', args=[self.pk])
+
+    def create_descendant(self):
+        return reverse('new_descendant', args=[self.pk])
+
+    def delete_employee(self):
+        return reverse('delete_employee', args=[self.pk])
 
     class MPTTMeta:
         order_insertion_by = ['name']

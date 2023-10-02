@@ -1,3 +1,6 @@
+"""
+This module used to seed database with fake information.
+"""
 # import random
 # import os
 # import django
