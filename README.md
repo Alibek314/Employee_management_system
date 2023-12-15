@@ -1,5 +1,5 @@
 # Test task for Python Junior position  // Task made in learning purpose
-Task taken from repo - [репозитория Hexlet](https://github.com/Hexlet/ru-test-assignments)
+Task taken from repo - [Hexlet repository](https://github.com/Hexlet/ru-test-assignments)
 
 ## Task: 
 Часть No1 (обязательная)\
