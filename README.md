@@ -1,4 +1,4 @@
-# Test task for Python Junior position  // Task made in learning purpose
+# Employee management system // Task made in learning purpose
 Task taken from repo - [Hexlet repository](https://github.com/Hexlet/ru-test-assignments)
 
 ## Task: 
